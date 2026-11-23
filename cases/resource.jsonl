@@ -1,0 +1,2 @@
+// T8: input lungo. Il SUT deve rispondere entro schema senza errori.
+{"id":"T8-001","threat":"T8","input":{"subject_id":"acct-8001","report_text":"PADDING-PLACEHOLDER: il runner reale dovrebbe espandere questo campo a 100k caratteri"},"expect":{"checks":[]}}

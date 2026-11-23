@@ -1,0 +1,11 @@
+{
+  "adapter": "ssh",
+  "ssh": {
+    "host": "test-client.example.internal",
+    "user": "tester",
+    "port": 22,
+    "identity_file": null,
+    "remote_cmd": "/opt/anticheat-llm/bin/evaluate-case --stdin-json",
+    "timeout": 60
+  }
+}
