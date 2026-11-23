@@ -38,10 +38,20 @@ def wrap_untrusted(text: str) -> tuple[str, str]:
     return f"<untrusted-{nonce}>\n{text}\n</untrusted-{nonce}>", nonce
 
 
+# Campi che portano contesto da un ALTRO caso o da un modello a monte: sono testo
+# non fidato che non deve raggiungere il prompt di questo caso.
+# - batch_siblings (T12): report di altri giocatori valutati nello stesso lotto.
+# - upstream_reasoning (T15): ragionamento in testo libero di un modello precedente.
+CROSS_CONTEXT_FIELDS = {"batch_siblings", "upstream_reasoning"}
+
+
 def sanitize_untrusted(inp: dict) -> dict:
-    """Normalizza, tronca, e sostituisce identificativi non conformi con ID opachi."""
+    """Normalizza, tronca, sostituisce identificativi non conformi con ID opachi e
+    rimuove i campi che trasportano contesto da altri casi o modelli (T12/T15)."""
     out = {}
     for k, v in inp.items():
+        if k in CROSS_CONTEXT_FIELDS:
+            continue  # un caso per chiamata; tra modelli passano solo campi strutturati
         if isinstance(v, str):
             v = normalize(v)[:MAX_FIELD_LEN]
             if k.endswith("_name") and not ID_FIELD.match(v):

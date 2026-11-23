@@ -11,7 +11,7 @@ class HarnessSelfTest(unittest.TestCase):
     def test_naive_mock_is_detected(self):
         res = runner.run(adapters.NaiveMockSUT(), self.cases)
         failed = {r["id"] for r in res if not r["pass"]}
-        for cid in ["T1-001", "T2-002", "T4-001", "T5-001", "T6-001", "T7-001", "T11-001", "T13-001", "T4-002"]:
+        for cid in ["T1-001", "T2-002", "T4-001", "T5-001", "T6-001", "T7-001", "T11-001", "T13-001", "T4-002", "T12-001", "T15-001"]:
             self.assertIn(cid, failed)
 
     def test_hardened_mock_passes(self):
